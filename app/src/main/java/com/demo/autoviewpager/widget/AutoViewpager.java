@@ -23,12 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
- *  @项目名：  huoban 
- *  @包名：    huoban.com.gongshe.ui.view
+ *  @项目名：  AutoViewPager
+ *  @包名：    com.demo.autoviewpager
  *  @文件名:   AutoViewpager
  *  @创建者:   xuerui
- *  @创建时间:  2017/4/1 16:42
- *  @描述：    TODO
+ *  @创建时间:  2017/4/7 16:42
+ *  @描述：    自动轮播图实现
  */
 public class AutoViewpager extends RelativeLayout implements ViewPager.OnPageChangeListener, View.OnTouchListener {
 	private static final String TAG = "AutoViewpager";
@@ -67,6 +67,8 @@ public class AutoViewpager extends RelativeLayout implements ViewPager.OnPageCha
 		mDuration = ta.getInteger(R.styleable.AutoViewpager_duration, NORMAL_DURATION);
 		mDotSize = ta.getDimensionPixelSize(R.styleable.AutoViewpager_dotSize, DOT_NORAML_SIZE);
 		mIsAuto = ta.getBoolean(R.styleable.AutoViewpager_isAuto, true);
+		//释放资源
+		ta.recycle();
 	}
 
 	public void setDotImageResourse(int res) {
@@ -96,7 +98,7 @@ public class AutoViewpager extends RelativeLayout implements ViewPager.OnPageCha
 		mViewPager.addOnPageChangeListener(this);
 	}
 
-	public void setData(List<String> list) {
+	public void setPicList(List<String> list) {
 		if (list == null || list.size() == 0) return;
 		List<ImageView> imageList = new ArrayList<>();
 		mCount = list.size();

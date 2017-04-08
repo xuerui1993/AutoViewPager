@@ -26,6 +26,6 @@ public class MainActivity extends AppCompatActivity {
 		autoViewpager.setIsAuto(true);
 		autoViewpager.setDotImageResourse(R.drawable.dot_selector);
 		autoViewpager.setDotSize(getResources().getDimensionPixelOffset(R.dimen.top_dot_size));
-		autoViewpager.setData(urlList);
+		autoViewpager.setPicList(urlList);
 	}
 }
