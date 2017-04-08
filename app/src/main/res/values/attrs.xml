@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<declare-styleable name="AutoViewpager">
+		<attr name="dotSize" format="dimension"/>
+		<attr name="dotSrc" format="reference"/>
+		<attr name="duration" format="integer"/>
+		<attr name="isAuto" format="boolean"/>
+	</declare-styleable>
+</resources>
