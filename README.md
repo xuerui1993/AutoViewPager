@@ -6,6 +6,8 @@
     <br>android:layout_height="180dp"/>
 <br>布局支持自定义属性
 <br><com.demo.autoviewpager.widget.AutoViewpager
+        <br>app:dotPosition="center" //设置小圆点位置
+		<br>app:dotSrc="@drawable/dot_selector" // 设置小圆点图片
 		<br>app:isAuto="true"  //是否轮播
 		<br>app:duration="5000"  //图片切换时间
 		<br>app:dotSize="8dp"    //原点大小

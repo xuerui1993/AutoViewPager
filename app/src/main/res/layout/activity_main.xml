@@ -8,6 +8,8 @@
 	tools:context="com.demo.autoviewpager.activity.MainActivity"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 	<com.demo.autoviewpager.widget.AutoViewpager
+		app:dotPosition="center"
+		app:dotSrc="@drawable/dot_selector"
 		android:id="@+id/auto_viewpager"
 		android:layout_width="match_parent"
 		android:layout_height="180dp"/>

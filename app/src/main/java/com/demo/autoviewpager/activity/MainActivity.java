@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 		autoViewpager.setLabelColor("#000000");
 		autoViewpager.setLaBelData(urlList);
 		autoViewpager.setIsAuto(true);
-		autoViewpager.setDotImageResourse(R.drawable.dot_selector);
+//		autoViewpager.setDotImageResourse(R.drawable.dot_selector);
 		autoViewpager.setDotSize(getResources().getDimensionPixelOffset(R.dimen.top_dot_size));
 		autoViewpager.setPicList(urlList);
 	}

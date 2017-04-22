@@ -3,6 +3,7 @@ package com.demo.autoviewpager.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -34,6 +35,9 @@ public class AutoViewpager extends RelativeLayout implements ViewPager.OnPageCha
 	private static final String TAG = "AutoViewpager";
 	private static final int NORMAL_DURATION = 5000;
 	private static final int START_DURATION = 2000;
+	private static final int DOT_POSITION_LEFT = 0;
+	private static final int DOT_POSITION_CENTER = 1;
+	private static final int DOT_POSITION_RIGHT = 2;
 	private AutoViewPagerAdpater mAdvertAdapter;
 	private ImageView mCurrentDot;
 	private SwitchPagerTask mSwitchPagerTask;
@@ -43,12 +47,14 @@ public class AutoViewpager extends RelativeLayout implements ViewPager.OnPageCha
 	private LinearLayout mLlDot;
 	private int mDotSize;
 	private int mDuration;
-	private int mDotDrawableRes = R.drawable.dot_selector;
+	private int mDotDrawableRes;
 	private int DOT_NORAML_SIZE = getResources().getDimensionPixelSize(R.dimen.top_dot_size);
 	private boolean mIsAuto;
 	private TextView mTvLabel;
 	private List<String> mLabelList;
 	String mLabelColor = "#ffffff";
+	private Drawable mDrawable;
+	private int mDotPosition;
 
 	public AutoViewpager(Context context) {
 		this(context, null);
@@ -67,10 +73,14 @@ public class AutoViewpager extends RelativeLayout implements ViewPager.OnPageCha
 		mDuration = ta.getInteger(R.styleable.AutoViewpager_duration, NORMAL_DURATION);
 		mDotSize = ta.getDimensionPixelSize(R.styleable.AutoViewpager_dotSize, DOT_NORAML_SIZE);
 		mIsAuto = ta.getBoolean(R.styleable.AutoViewpager_isAuto, true);
+		mDrawable = ta.getDrawable(R.styleable.AutoViewpager_dotSrc);
+		mDotPosition = ta.getInteger(R.styleable.AutoViewpager_dotPosition, 2);
 		//释放资源
 		ta.recycle();
 	}
-
+	public void setDotPosition(int dotPosition){
+		mDotPosition = dotPosition;
+	}
 	public void setDotImageResourse(int res) {
 		mDotDrawableRes = res;
 	}
@@ -86,9 +96,11 @@ public class AutoViewpager extends RelativeLayout implements ViewPager.OnPageCha
 	public void setDuration(int duration) {
 		mDuration = duration;
 	}
-	public void setLabelColor(String labelColor){
+
+	public void setLabelColor(String labelColor) {
 		mLabelColor = labelColor;
 	}
+
 	public void setLaBelData(List<String> list) {
 		mLabelList = list;
 	}
@@ -128,11 +140,36 @@ public class AutoViewpager extends RelativeLayout implements ViewPager.OnPageCha
 	}
 
 	private void initDotContaner(List<String> list) {
+		RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mLlDot.getLayoutParams();
+		switch (mDotPosition) {
+			case 0:
+				layoutParams.addRule(RelativeLayout.ALIGN_LEFT);
+				break;
+			case 1:
+				layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				break;
+			case 2:
+				layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+				break;
+		}
 		mLlDot.removeAllViews();
 		ArrayList<ImageView> imageList = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
 			ImageView imageView = new ImageView(getContext());
-			imageView.setImageResource(mDotDrawableRes);
+			if (mDotDrawableRes!=0){
+				//代码中设置了mDotDrawableRes则优先设置
+				imageView.setImageResource(R.drawable.dot_selector);
+			}else {
+				if (mDrawable != null) {
+					//在布局中设置了,则显示布局中的
+					Drawable newDrawable = mDrawable.getConstantState().newDrawable();
+					imageView.setImageDrawable(newDrawable);
+
+				} else {
+					//若都没设置则,设置默认
+					imageView.setImageResource(R.drawable.dot_selector);
+				}
+			}
 			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mDotSize, mDotSize);
 			imageList.add(imageView);
 			if (i != 0) {
@@ -155,7 +192,7 @@ public class AutoViewpager extends RelativeLayout implements ViewPager.OnPageCha
 	@Override
 	public void onPageSelected(int position) {
 		if (mLabelList != null && mLabelList.size() > position) {
-			mTvLabel.setText(mLabelList.get(position)+"");
+			mTvLabel.setText(mLabelList.get(position) + "");
 		}
 		mCurrentDot.setSelected(false);
 		ImageView imageView = (ImageView) mLlDot.getChildAt(position);
