@@ -1,5 +1,19 @@
 # AutoViewPager
-1.在布局中添加
+1.在项目build.gradle目录下添加
+<br>
+allprojects {
+    <br>repositories {
+	<br>jcenter()
+       <br> maven { url 'https://jitpack.io' }
+    }
+}
+<br>
+2.在app的build.gradle目录下添加
+<br>dependencies {
+    <br>compile 'com.github.xuerui1993:AutoViewPagerLibrary:master-SNAPSHOT'
+<br>}
+
+3.在布局中添加
 <br><com.demo.autoviewpager.widget.AutoViewpager
     <br>android:id="@+id/auto_viewpager"
     <br>android:layout_width="match_parent"
@@ -14,7 +28,7 @@
 		<br>android:id="@+id/auto_viewpager"
 		<br>android:layout_width="match_parent"
 		<br>android:layout_height="180dp"/>
-<br>2.在代码中使用
+<br>4.在代码中使用
 <br>List<String> urlList = new ArrayList<>();  //图片地址集合
 <br>List<String> labelList = new ArrayList<>();  //标题集合
 <br>autoViewpager.setLaBelData(urlList); //设置标题
