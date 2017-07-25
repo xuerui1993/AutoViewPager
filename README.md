@@ -5,7 +5,7 @@
 		    repositories {
 			jcenter()
 		    maven {
-				url 'https://jitpack.io' }
+			url 'https://jitpack.io' }
 		    }
 		}
 
@@ -26,13 +26,13 @@
 
 		<com.demo.autoviewpager.widget.AutoViewpager
 	        app:dotPosition="center" //设置小圆点位置
-			app:dotSrc="@drawable/dot_selector" // 设置小圆点图片
-			app:isAuto="true"  //是否轮播
-			app:duration="5000"  //图片切换时间
-			app:dotSize="8dp"    //原点大小
-			android:id="@+id/auto_viewpager"
-			android:layout_width="match_parent"
-			android:layout_height="180dp"/>
+		app:dotSrc="@drawable/dot_selector" // 设置小圆点图片
+		app:isAuto="true"  //是否轮播
+		app:duration="5000"  //图片切换时间
+		app:dotSize="8dp"    //原点大小
+		android:id="@+id/auto_viewpager"
+		android:layout_width="match_parent"
+		android:layout_height="180dp"/>
 
 - 4.在代码中使用
 
