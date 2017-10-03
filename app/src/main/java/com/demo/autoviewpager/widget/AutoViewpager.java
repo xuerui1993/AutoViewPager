@@ -78,9 +78,11 @@ public class AutoViewpager extends RelativeLayout implements ViewPager.OnPageCha
 		//释放资源
 		ta.recycle();
 	}
-	public void setDotPosition(int dotPosition){
+
+	public void setDotPosition(int dotPosition) {
 		mDotPosition = dotPosition;
 	}
+
 	public void setDotImageResourse(int res) {
 		mDotDrawableRes = res;
 	}
@@ -112,19 +114,15 @@ public class AutoViewpager extends RelativeLayout implements ViewPager.OnPageCha
 
 	public void setPicList(List<String> list) {
 		if (list == null || list.size() == 0) return;
-		List<ImageView> imageList = new ArrayList<>();
 		mCount = list.size();
-		for (String listBean : list) {
-			ImageView imageView = new ImageView(getContext());
-			imageList.add(imageView);
-		}
-		mAdvertAdapter = new AutoViewPagerAdpater(getContext(), list, imageList);
+		mAdvertAdapter = new AutoViewPagerAdpater(getContext(), list);
 		mViewPager.setAdapter(mAdvertAdapter);
 		//初始化小圆点
 		initDotContaner(list);
-		//		int middle = Integer.MAX_VALUE / 2;
-		//		int extra = middle % mCount;
-		//		mTopViewPager.setCurrentItem(mCount*10000);
+		//选中中间的第一个
+		int middle = Integer.MAX_VALUE / 2;
+		int extra = middle % mCount;
+		mViewPager.setCurrentItem(middle-extra);
 		//马上开始自动轮播功能
 		if (mIsAuto) {
 			autoChangePage();
@@ -156,10 +154,10 @@ public class AutoViewpager extends RelativeLayout implements ViewPager.OnPageCha
 		ArrayList<ImageView> imageList = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
 			ImageView imageView = new ImageView(getContext());
-			if (mDotDrawableRes!=0){
+			if (mDotDrawableRes != 0) {
 				//代码中设置了mDotDrawableRes则优先设置
 				imageView.setImageResource(R.drawable.dot_selector);
-			}else {
+			} else {
 				if (mDrawable != null) {
 					//在布局中设置了,则显示布局中的
 					Drawable newDrawable = mDrawable.getConstantState().newDrawable();
@@ -191,6 +189,7 @@ public class AutoViewpager extends RelativeLayout implements ViewPager.OnPageCha
 
 	@Override
 	public void onPageSelected(int position) {
+		position = position % mLabelList.size();
 		if (mLabelList != null && mLabelList.size() > position) {
 			mTvLabel.setText(mLabelList.get(position) + "");
 		}
@@ -279,7 +278,7 @@ public class AutoViewpager extends RelativeLayout implements ViewPager.OnPageCha
 	}
 
 	public interface ItemClickListener {
-		void OnItemClickListener(int postion);
+		void OnItemClickListener(int position);
 	}
 
 	ItemClickListener mItemClickListener;
@@ -292,18 +291,16 @@ public class AutoViewpager extends RelativeLayout implements ViewPager.OnPageCha
 		private static final String TAG = "AutoViewPagerAdpater";
 		Context mContext;
 		List<String> mList;
-		List<ImageView> mImageList;
 
-		public AutoViewPagerAdpater(Context context, List<String> list, List<ImageView> imageList) {
+		public AutoViewPagerAdpater(Context context, List<String> list) {
 			mContext = context;
 			mList = list;
-			mImageList = imageList;
 		}
 
 		@Override
 		public int getCount() {
 			if (mList != null) {
-				return mList.size();
+				return Integer.MAX_VALUE;
 			}
 			return 0;
 		}
@@ -315,19 +312,20 @@ public class AutoViewpager extends RelativeLayout implements ViewPager.OnPageCha
 
 		@Override
 		public Object instantiateItem(ViewGroup container, final int position) {
-			ImageView imageView = mImageList.get(position);
+			final int picPosition = position % mList.size();
+			ImageView imageView = new ImageView(mContext);
 			imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-			container.addView(imageView);
-			String url = mList.get(position);
+			String url = mList.get(picPosition);
 			Glide.with(mContext).load(url).into(imageView);
 			imageView.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					if (mItemClickListener != null) {
-						mItemClickListener.OnItemClickListener(position);
+						mItemClickListener.OnItemClickListener(picPosition);
 					}
 				}
 			});
+			container.addView(imageView);
 			return imageView;
 		}
 
