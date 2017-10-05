@@ -12,7 +12,7 @@
 - 2.在app的build.gradle目录下添加
 
 		dependencies {
-        		compile 'com.github.xuerui1993:AutoViewPagerLibrary:v1.2'
+        		compile 'com.github.xuerui1993:AutoViewPagerLibrary:v1.3'
     		}
 
 - 3.在布局中添加
@@ -34,8 +34,23 @@
 		    android:layout_width="match_parent"
 		    android:layout_height="180dp"/>
 
-- 4.在代码中使用
+- 4.创建ImageLoader实现类
 
+		public class GlideImageLoader implements ImageLoader {
+			@Override
+			public void displayImage(Context context, String url, ImageView imageView) {
+				Glide.with(context).load(url).into(imageView);
+			}
+
+			@Override
+			public void clearMemoryCache() {
+
+			}
+		}
+
+- 5.在代码中使用
+		
+		autoViewpager.setImageloader(new GlideImageLoader()); //外部设置图片加载类,必须设置,否则会抛出异常
 		List<String> urlList = new ArrayList<>();  //图片地址集合
 		List<String> labelList = new ArrayList<>();  //标题集合
 		autoViewpager.setLaBelData(urlList); //设置标题
