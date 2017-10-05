@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		AutoViewpager autoViewpager = (AutoViewpager) findViewById(R.id.auto_viewpager);
+		autoViewpager.setImageloader(new GlideImageLoader());
 		final List<String> urlList = new ArrayList<>();
 		String url1 = "http://n.sinaimg.cn/sports/2_img/upload/4f160954/20170916/_1S4-fykymwk2497546.jpg";
 		String url2 = "http://img.hboffice.cn/newsletter/maKVdr1491015223771.jpg";

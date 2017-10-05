@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.demo.autoviewpager.R;
+import com.demo.autoviewpager.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,9 +56,14 @@ public class AutoViewpager extends RelativeLayout implements ViewPager.OnPageCha
 	String mLabelColor = "#ffffff";
 	private Drawable mDrawable;
 	private int mDotPosition;
+	private ImageLoader mImageloader;
 
 	public AutoViewpager(Context context) {
 		this(context, null);
+	}
+
+	public void setImageloader(ImageLoader imageloader) {
+		this.mImageloader = imageloader;
 	}
 
 	public AutoViewpager(Context context, AttributeSet attrs) {
@@ -316,7 +322,7 @@ public class AutoViewpager extends RelativeLayout implements ViewPager.OnPageCha
 			ImageView imageView = new ImageView(mContext);
 			imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 			String url = mList.get(picPosition);
-			Glide.with(mContext).load(url).into(imageView);
+			mImageloader.displayImage(mContext,url,imageView);
 			imageView.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
