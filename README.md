@@ -5,15 +5,15 @@
 		    repositories {
 		    jcenter()
 		    maven {
-			url 'https://jitpack.io' }
+			url 'https://jitpack.io' 
 		    }
 		}
 
 - 2.在app的build.gradle目录下添加
 
 		dependencies {
-			compile 'com.github.xuerui1993:AutoViewPagerLibrary:master-SNAPSHOT'
-		}
+        		compile 'com.github.xuerui1993:AutoViewPagerLibrary:v1.2'
+    		}
 
 - 3.在布局中添加
 
