@@ -3,6 +3,7 @@ package com.demo.autoviewpager.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.demo.autoviewpager.R;
 import com.demo.autoviewpager.widget.AutoViewpager;

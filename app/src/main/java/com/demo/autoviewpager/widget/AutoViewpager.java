@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.demo.autoviewpager.R;
 import com.demo.autoviewpager.loader.ImageLoader;
 
