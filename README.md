@@ -1,4 +1,5 @@
 # AutoViewPager
+![1507193217(1).jpg](http://upload-images.jianshu.io/upload_images/3257272-dbcbf0939d78d8e9.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 - 1.在项目build.gradle目录下添加
 
 		allprojects {
