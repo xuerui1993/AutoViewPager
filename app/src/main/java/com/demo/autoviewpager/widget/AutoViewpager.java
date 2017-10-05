@@ -321,6 +321,9 @@ public class AutoViewpager extends RelativeLayout implements ViewPager.OnPageCha
 			ImageView imageView = new ImageView(mContext);
 			imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 			String url = mList.get(picPosition);
+			if (mImageloader==null){
+				throw new IllegalArgumentException("图片加载类为null,需实现ImageLoader接口并赋值");
+			}
 			mImageloader.displayImage(mContext,url,imageView);
 			imageView.setOnClickListener(new OnClickListener() {
 				@Override
